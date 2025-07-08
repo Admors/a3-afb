@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculateur -  Management </title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="#">AltisLife • AFB-Resource</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Accueil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="calculateur.html">Calculateur</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="licences.html">Licences</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTENU -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="mb-4">📦 Calculateur de Chargement & Rendement</h2>
+
+      <div class="row g-4">
+        <!-- Espace disponible -->
+        <div class="col-md-4">
+          <label for="storage" class="form-label">Espace disponible (kg)</label>
+          <input type="number" class="form-control" id="storage" placeholder="Ex: 120" min="1" step="1" required>
+        </div>
+
+        <!-- Ressource -->
+        <div class="col-md-4">
+          <label for="resource" class="form-label">Ressource</label>
+          <select class="form-select" id="resource" required>
+            <option value="7">Pétrole brut (7 kg)</option>
+            <option value="4">Cuivre brut (4 kg)</option>
+            <option value="5">Fer brut (5 kg)</option>
+            <option value="3">Sel brut (3 kg)</option>
+            <option value="6">Héroïne brute (6 kg)</option>
+            <option value="6">Cocaïne brute (6 kg)</option>
+            <option value="2">Viande de lapin crue (2 kg)</option>
+            <option value="2">Poisson salema cru (2 kg)</option>
+            <option value="2">Poisson orné cru (2 kg)</option>
+            <option value="4">Maquereau cru (4 kg)</option>
+            <option value="6">Thon cru (6 kg)</option>
+            <option value="4">Mulet cru (4 kg)</option>
+            <option value="6">Requin chat cru (6 kg)</option>
+            <option value="6">Viande de tortue (6 kg)</option>
+            <option value="1">Poule crue (1 kg)</option>
+            <option value="1">Coq cru (1 kg)</option>
+            <option value="2">Mouton cru (2 kg)</option>
+            <option value="2">Chèvre crue (2 kg)</option>
+          </select>
+        </div>
+
+        <!-- Prix unitaire -->
+        <div class="col-md-4">
+          <label for="price" class="form-label">Prix de revente unitaire ($)</label>
+          <input type="number" class="form-control" id="price" placeholder="Ex: 2500" min="0" step="1" required>
+        </div>
+      </div>
+
+      <!-- Bouton -->
+      <button class="btn btn-primary mt-4 w-100" onclick="calculate()">Calculer</button>
+
+      <!-- Résultat -->
+      <div class="alert alert-success mt-4 d-none" id="resultBox">
+        <strong>Résultat :</strong><br>
+        Vous pouvez transporter <span id="units">0</span> unités.<br>
+        Rendement total estimé : <strong><span id="total">$0</span></strong>.
+      </div>
+    </div>
+  </section>
+
+  <!-- JS -->
+  <script>
+    function calculate() {
+      const storage = parseFloat(document.getElementById('storage').value);
+      const weight = parseFloat(document.getElementById('resource').value);
+      const price = parseFloat(document.getElementById('price').value);
+
+      if (isNaN(storage) || storage <= 0 || isNaN(weight) || isNaN(price) || price < 0) {
+        alert("Veuillez entrer des valeurs valides.");
+        return;
+      }
+
+      const units = Math.floor(storage / weight);
+      const total = units * price;
+
+      // Sécurisé avec textContent (aucune exécution HTML)
+      document.getElementById('units').textContent = units;
+      document.getElementById('total').textContent = total.toLocaleString() + " $";
+      document.getElementById('resultBox').classList.remove('d-none');
+    }
+  </script>
+</body>
+</html>
